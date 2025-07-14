@@ -1,0 +1,18 @@
+[package]
+name = "lambda-graph"
+version = "0.1.0"
+edition = "2024"
+
+authors = ["A4-Tacks <wdsjxhno1001@163.com>"]
+repository = "https://github.com/A4-Tacks/lambda-graph"
+description = "Graph visualization of John Tromp style lambda"
+
+[features]
+trace = ["peg/trace"]
+
+[dependencies]
+char-classes = "0.3.2"
+getopts-macro = "0.1.8"
+line-column = "0.1.6"
+peg = "0.8.5"
+to-true = "0.1.1"
