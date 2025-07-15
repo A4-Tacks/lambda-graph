@@ -9,6 +9,7 @@ fn main() {
         -l, --lambda        "output raw lambda";
         -s, --simple        "output simple paren lambda";
         -p, --pretty        "output pretty indent lambda";
+        -P, --pretty-n=n    "output pretty indent lambda, custom level";
         -n, --no-graph      "no output graph";
         -u, --unit=unit     "draw unit [default: 2 spaces]";
         -e, --func-extra=n  "after func extra units";
@@ -52,6 +53,12 @@ fn main() {
             eprintln!("ArgError: on arg {arg:?} {e}");
             exit(2)
         });
+    let pretty_n = matches.opt_get("pretty-n")
+        .unwrap_or_else(|e| {
+            let arg = matches.opt_str("pretty-n").unwrap();
+            eprintln!("ArgError: on arg {arg:?} {e}");
+            exit(2)
+        });
 
     matches.free.is_empty()
         .then(|| {
@@ -80,8 +87,10 @@ fn main() {
         if simple {
             println!("{expr:o}")
         }
-        if pretty {
-            println!("{expr:#}")
+        if let Some(n) = pretty_n {
+            println!("{expr:#.n$o}")
+        } else if pretty {
+            println!("{expr:#o}")
         }
         if !graph {
             return;

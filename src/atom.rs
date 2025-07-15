@@ -56,11 +56,11 @@ impl Atom {
         level: usize,
         f: &mut fmt::Formatter<'_>,
     ) -> fmt::Result {
+        if self.simple(level) {
+            return write!(f, "{self:o}");
+        }
         match self {
             Atom::Term(ch) => write!(f, "{ch}"),
-            Atom::Call(fun, a) if self.simple(level) => {
-                write!(f, "({fun}{a})")
-            },
             Atom::Call(fun, a) => {
                 ind.push_str("  ");
                 write!(f, "(\n{ind}")?;
@@ -70,9 +70,6 @@ impl Atom {
 
                 ind.pop(); ind.pop();
                 write!(f, "\n{ind})")
-            },
-            Atom::Func(p, e) if self.simple(level) => {
-                write!(f, "(λ{p}.{e})")
             },
             Atom::Func(p, e) => {
                 ind.push_str("  ");
@@ -95,10 +92,6 @@ impl From<Term> for Atom {
 
 impl fmt::Display for Atom {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        if f.alternate() {
-            let level = f.precision().unwrap_or(8);
-            return self.indented_fmt(&mut String::new(), level, f);
-        }
         match self {
             Atom::Term(ch) => write!(f, "{ch}"),
             Atom::Call(fun, a) => write!(f, "({fun}{a})"),
@@ -108,6 +101,10 @@ impl fmt::Display for Atom {
 }
 impl fmt::Octal for Atom {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        if f.alternate() {
+            let level = f.precision().unwrap_or(8);
+            return self.indented_fmt(&mut String::new(), level, f);
+        }
         match self {
             Atom::Term(ch) => write!(f, "{ch}"),
             Atom::Call(fun, a) => {
@@ -183,4 +180,3 @@ pub type PegResult<T> = Result<T, peg::error::ParseError<peg::str::LineCol>>;
 pub fn expr(s: &str) -> PegResult<Atom> {
     parser::expr(s, &mut Default::default())
 }
-
