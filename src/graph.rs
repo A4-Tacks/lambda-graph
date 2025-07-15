@@ -61,7 +61,7 @@ impl GraphCtx {
 
                 self.screen.bar(left_y, left_handle, self.y-left_y);
                 self.screen.bar(right_y, right_handle, self.y-right_y);
-                self.screen.bar(self.y, left_handle, 3);
+                self.screen.bar(self.y, left_handle, 2);
                 self.y += 2;
             },
             Atom::Func(name, atom) => {
