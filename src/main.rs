@@ -1,4 +1,4 @@
-use std::{env::args, fmt::Display, io::stdin, process::exit};
+use std::{env::args, fmt::Display, io::{read_to_string, stdin}, process::exit};
 
 use getopts_macro::getopts_options;
 use lambda_graph::{expr, Error, GraphCtx, Term};
@@ -54,7 +54,14 @@ fn main() {
         });
 
     matches.free.is_empty()
-        .then(|| stdin().lines().map(Result::unwrap))
+        .then(|| {
+            let isatty = atty::is(atty::Stream::Stdin);
+            isatty.then(|| stdin().lines())
+                .into_iter()
+                .flatten()
+                .chain((!isatty).then(|| read_to_string(stdin())))
+                .map(Result::unwrap)
+        })
         .into_iter()
         .flatten()
         .chain(matches.free)

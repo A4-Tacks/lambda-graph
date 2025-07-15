@@ -11,6 +11,7 @@ description = "Graph visualization of John Tromp style lambda"
 trace = ["peg/trace"]
 
 [dependencies]
+atty = "0.2.14"
 char-classes = "0.3.2"
 getopts-macro = "0.1.8"
 line-column = "0.1.6"
