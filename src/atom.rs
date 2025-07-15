@@ -136,8 +136,8 @@ peg::parser!(grammar parser(ctx: &mut Ctx) for str {
     rule term() -> Term
         = p:position!()
           t:quiet!{
-            ch:[ch if any!("a-zA-Z$_+*/%!-", ch)]
-            { Term(ch.encode_utf8(&mut [0]).into(), p) }
+            ch:[ch if any!("a-zA-Z$_Σ-κμ-ϧ+*/%!-", ch)]
+            { Term(ch.encode_utf8(&mut [0, 0]).into(), p) }
             / "`" s:$(([^ch if any!(" \t\r\n`", ch)])+) "`"
             { Term(s.into(), p) }
           }
