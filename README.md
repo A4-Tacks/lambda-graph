@@ -1,4 +1,6 @@
-Graph visualization of John Tromp style lambda
+Graph visualization of [John Tromp] style lambda
+
+[John Tromp]: https://tromp.github.io/cl/diagrams.html
 
 # Example
 
