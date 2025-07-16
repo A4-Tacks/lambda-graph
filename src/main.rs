@@ -22,7 +22,7 @@ fn main() {
     let matches = match options.parse(args().skip(1)) {
         Ok(m) => m,
         Err(e) => {
-            eprintln!("{e}");
+            eprintln!("Error: {e}");
             exit(2)
         },
     };
