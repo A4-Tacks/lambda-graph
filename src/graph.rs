@@ -88,7 +88,7 @@ impl GraphCtx {
                 self.ext_end_from_subfunc();
 
                 let bar = self.bars.pop().unwrap();
-                let end = bar.end;
+                let end = bar.end.max(x+2);
 
                 if is_leader {
                     self.leaders.pop().unwrap();
