@@ -1,4 +1,4 @@
-Test data file
+Test data file, on vim run :so tests/datas.vim
 . x.x
 xxx
  x
