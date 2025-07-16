@@ -68,6 +68,7 @@ dependencies = [
  "line-column",
  "peg",
  "to-true",
+ "unicode-width",
 ]
 
 [[package]]

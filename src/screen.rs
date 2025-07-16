@@ -1,4 +1,7 @@
+use std::borrow::Cow;
+
 use to_true::ToTrue;
+use unicode_width::UnicodeWidthStr;
 
 use crate::utils::Sign;
 
@@ -34,18 +37,20 @@ impl Screen {
         }
     }
 
-    pub fn print(&self, space: &str) {
+    pub fn print(&self, has_color: bool, space: Option<&str>, solid: &str) {
         let mut color = false;
+        let space = space.map(Cow::Borrowed)
+            .unwrap_or_else(|| " ".repeat(solid.width()).into());
 
         for line in &self.lines {
             for &pos in line {
                 if pos {
-                    color.to_true(|| print!("\x1b[7m"));
+                    if has_color { color.to_true(|| print!("\x1b[7m")); }
+                    print!("{solid}")
                 } else {
-                    color.to_false(|| print!("\x1b[27m"));
+                    if has_color { color.to_false(|| print!("\x1b[27m")); }
+                    print!("{space}")
                 }
-
-                print!("{space}")
             }
 
             color.to_false(|| print!("\x1b[27m"));

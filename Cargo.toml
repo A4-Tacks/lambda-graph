@@ -17,3 +17,4 @@ getopts-macro = "0.1.8"
 line-column = "0.1.6"
 peg = "0.8.5"
 to-true = "0.1.1"
+unicode-width = { version = "0.2.1", default-features = false }

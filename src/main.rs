@@ -12,8 +12,10 @@ fn main() {
         -P, --pretty-n=n    "output pretty indent lambda, custom level";
         -n, --no-graph      "no output graph";
         -u, --unit=unit     "draw unit [default: 2 spaces]";
+        -U, --unit-space=s  "draw space unit [default: 2 spaces]";
         -e, --func-extra=n  "after func extra units";
         -c, --call-extra=n  "after call extra units";
+            --no-color      "no use color sequence";
         -h, --help          "show help message";
         -v, --version       "show version";
     };
@@ -40,7 +42,9 @@ fn main() {
     let simple = matches.opt_present("simple");
     let pretty = matches.opt_present("pretty");
     let graph = !matches.opt_present("no-graph");
+    let no_color = matches.opt_present("no-color");
     let unit = matches.opt_str("unit").unwrap_or("  ".into());
+    let space = matches.opt_str("unit-space");
     let func_extra = matches.opt_get_default("func-extra", 0)
         .unwrap_or_else(|e| {
             let arg = matches.opt_str("func-extra").unwrap();
@@ -112,7 +116,11 @@ fn main() {
             },
         }
 
-        ctx.screen.print(&unit);
+        ctx.screen.print(
+            !no_color,
+            space.as_deref(),
+            &unit,
+        );
     });
 }
 
