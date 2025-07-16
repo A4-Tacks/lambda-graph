@@ -1,6 +1,6 @@
 use std::mem::replace;
 
-use crate::{Atom, Screen, Term};
+use crate::{utils::MaxTo, Atom, Screen, Term};
 
 #[derive(Debug, Clone)]
 pub enum Error {
@@ -94,7 +94,7 @@ impl GraphCtx {
                     self.leaders.pop().unwrap();
                 }
 
-                self.offset = end+self.func_extra_unit;
+                self.offset.max_to(end+self.func_extra_unit);
                 self.screen.line(y, x, end-x+1);
             },
         }

@@ -11,3 +11,14 @@ impl<T: Default> Sign for Vec<T> {
         &mut self[i]
     }
 }
+
+pub trait MaxTo {
+    fn max_to(&mut self, rhs: Self);
+}
+impl<T: Ord + Copy> MaxTo for T {
+    fn max_to(&mut self, rhs: Self) {
+        if *self < rhs {
+            *self = rhs
+        }
+    }
+}
