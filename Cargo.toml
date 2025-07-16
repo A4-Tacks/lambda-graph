@@ -10,6 +10,9 @@ description = "Graph visualization of John Tromp style lambda"
 [features]
 trace = ["peg/trace"]
 
+[dev-dependencies]
+dissimilar = "1.0.10"
+
 [dependencies]
 atty = "0.2.14"
 char-classes = "0.3.2"

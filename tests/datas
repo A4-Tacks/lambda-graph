@@ -1,0 +1,138 @@
+Test data file
+. x.x
+xxx
+ x
+. xy.x
+xxx
+ x
+xxx
+ x
+. xy.y
+xxx
+
+xxx
+ x
+. xyz.(xz)(yz)
+xxxxxxxxx
+ x
+xxxxxxxxx
+ x   x
+xxxxxxxxx
+ x x x x
+ xxx xxx
+ x   x
+ xxxxx
+ x
+. f.(x.xx)(x.f(xx))
+xxxxxxxxxxxxx
+       x
+xxxxx xxxxxxx
+ x x   x x x
+ xxx   x xxx
+ x     x x
+ x     xxx
+ x     x
+ xxxxxxx
+ x
+. fx.f(fx)
+xxxxxxx
+ x x
+xxxxxxx
+ x x x
+ x xxx
+ x x
+ xxx
+ x
+. fx.f(f(fx))
+xxxxxxxxx
+ x x x
+xxxxxxxxx
+ x x x x
+ x x xxx
+ x x x
+ x xxx
+ x x
+ xxx
+ x
+. nfx.n(gh.h(gf))(u.x)(u.u)
+xxxxxxxxxxxxxxxxxx
+ x
+xxxxxxxxxxxxxxxxxx
+ x      x
+xxxxxxxxxxxxxxxxxx
+ x      x   x
+ x xxxxxxx xxx xxx
+ x    x x   x   x
+ x xxxxxxx  x   x
+ x  x x x   x   x
+ x  x xxx   x   x
+ x  x x     x   x
+ x  xxx     x   x
+ x  x       x   x
+ xxxx       x   x
+ x          x   x
+ xxxxxxxxxxxx   x
+ x              x
+ xxxxxxxxxxxxxxxx
+ x
+. nf.n(fn.n(f(fx.nf(fx))))(x.f)(x.x)
+xxxxxxxxxxxxxxxxxxxxxxxxx
+ x
+xxxxxxxxxxxxxxxxxxxxxxxxx
+ x                 x
+ x xxxxxxxxxxxxxx xxx xxx
+ x    x            x   x
+ x xxxxxxxxxxxxxx  x   x
+ x  x x  x         x   x
+ x  x x xxxxxxxxx  x   x
+ x  x x  x x x     x   x
+ x  x x xxxxxxxxx  x   x
+ x  x x  x x x x   x   x
+ x  x x  xxx xxx   x   x
+ x  x x  x   x     x   x
+ x  x x  xxxxx     x   x
+ x  x x  x         x   x
+ x  x xxxx         x   x
+ x  x x            x   x
+ x  xxx            x   x
+ x  x              x   x
+ xxxx              x   x
+ x                 x   x
+ xxxxxxxxxxxxxxxxxxx   x
+ x                     x
+ xxxxxxxxxxxxxxxxxxxxxxx
+ x
+. nf.n(cab.cb(x.a(bx)))(xy.x)(x.x)f
+xxxxxxxxxxxxxxxxxxxxxxxxxx
+ x
+xxxxxxxxxxxxxxxxxxxxxxxxxx
+ x                      x
+ x xxxxxxxxxxxx xxx xxx x
+ x  x            x   x  x
+ x xxxxxxxxxxxx xxx  x  x
+ x  x    x       x   x  x
+ x xxxxxxxxxxxx  x   x  x
+ x  x x  x x     x   x  x
+ x  xxx xxxxxxx  x   x  x
+ x  x    x x x   x   x  x
+ x  x    x xxx   x   x  x
+ x  x    x x     x   x  x
+ x  x    xxx     x   x  x
+ x  x    x       x   x  x
+ x  xxxxxx       x   x  x
+ x  x            x   x  x
+ xxxx            x   x  x
+ x               x   x  x
+ xxxxxxxxxxxxxxxxx   x  x
+ x                   x  x
+ xxxxxxxxxxxxxxxxxxxxx  x
+ x                      x
+ xxxxxxxxxxxxxxxxxxxxxxxx
+ x
+. (x.xx)(x.xx)
+xxxxx xxxxx
+ x x   x x
+ xxx   xxx
+ x     x
+ xxxxxxx
+ x

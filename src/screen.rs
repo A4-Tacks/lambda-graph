@@ -1,3 +1,4 @@
+use core::fmt;
 use std::borrow::Cow;
 
 use to_true::ToTrue;
@@ -8,6 +9,13 @@ use crate::utils::Sign;
 #[derive(Debug, Default)]
 pub struct Screen {
     lines: Vec<Vec<bool>>,
+}
+
+pub struct OutputCtx<'a, W> {
+    pub writer: W,
+    pub has_color: bool,
+    pub space: Option<&'a str>,
+    pub solid: &'a str,
 }
 
 impl Screen {
@@ -37,7 +45,14 @@ impl Screen {
         }
     }
 
-    pub fn print(&self, has_color: bool, space: Option<&str>, solid: &str) {
+    pub fn print<W: fmt::Write>(&self, ctx: &mut OutputCtx<'_, W>) {
+        let OutputCtx {
+            writer: ref mut w,
+            has_color,
+            space,
+            solid,
+        } = *ctx;
+
         let mut color = false;
         let space = space.map(Cow::Borrowed)
             .unwrap_or_else(|| " ".repeat(solid.width()).into());
@@ -45,16 +60,16 @@ impl Screen {
         for line in &self.lines {
             for &pos in line {
                 if pos {
-                    if has_color { color.to_true(|| print!("\x1b[7m")); }
-                    print!("{solid}")
+                    if has_color { color.to_true(|| write!(w, "\x1b[7m")); }
+                    write!(w, "{solid}").unwrap();
                 } else {
-                    if has_color { color.to_false(|| print!("\x1b[27m")); }
-                    print!("{space}")
+                    if has_color { color.to_false(|| write!(w, "\x1b[27m")); }
+                    write!(w, "{space}").unwrap();
                 }
             }
 
-            color.to_false(|| print!("\x1b[27m"));
-            println!();
+            color.to_false(|| write!(w, "\x1b[27m"));
+            writeln!(w).unwrap();
         }
     }
 }

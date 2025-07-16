@@ -1,7 +1,7 @@
-use std::{env::args, fmt::Display, io::{read_to_string, stdin}, process::exit};
+use std::{env::args, fmt::{self, Display}, io::{self, read_to_string, stdin, stdout}, process::exit};
 
 use getopts_macro::getopts_options;
-use lambda_graph::{expr, Error, GraphCtx, Term};
+use lambda_graph::{expr, Error, GraphCtx, OutputCtx, Term};
 use line_column::line_column;
 
 fn main() {
@@ -116,11 +116,13 @@ fn main() {
             },
         }
 
-        ctx.screen.print(
-            !no_color,
-            space.as_deref(),
-            &unit,
-        );
+        let octx = &mut OutputCtx {
+            writer: StdoutFmt(stdout().lock()),
+            has_color: !no_color,
+            space: space.as_deref(),
+            solid: &unit,
+        };
+        ctx.screen.print(octx);
     });
 }
 
@@ -136,4 +138,16 @@ fn error(s: &str, i: usize, e: impl Display) {
         eprint!("near `{near}` ");
     }
     eprintln!("{e}");
+}
+
+struct StdoutFmt<'a>(io::StdoutLock<'a>);
+impl<'a> fmt::Write for StdoutFmt<'a> {
+    fn write_str(&mut self, s: &str) -> fmt::Result {
+        io::Write::write(&mut self.0, s.as_bytes()).unwrap();
+        Ok(())
+    }
+    fn write_fmt(&mut self, args: fmt::Arguments<'_>) -> fmt::Result {
+        io::Write::write_fmt(&mut self.0, args).unwrap();
+        Ok(())
+    }
 }

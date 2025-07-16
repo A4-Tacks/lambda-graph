@@ -32,6 +32,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "dissimilar"
+version = "1.0.10"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "8975ffdaa0ef3661bfe02dbdcc06c9f829dfafe6a3c474de366a8d5e44276921"
+
+[[package]]
 name = "getopts"
 version = "0.2.23"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -64,6 +70,7 @@ version = "0.1.0"
 dependencies = [
  "atty",
  "char-classes",
+ "dissimilar",
  "getopts-macro",
  "line-column",
  "peg",
