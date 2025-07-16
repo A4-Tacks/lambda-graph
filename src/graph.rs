@@ -23,7 +23,7 @@ pub struct GraphCtx {
     offset_handle: usize,
     y: usize,
     fun_offset: Option<usize>,
-    pub func_extra_unit: usize,
+    pub func_extra_unit: Option<usize>,
     pub call_extra_unit: usize,
 }
 
@@ -50,8 +50,14 @@ impl GraphCtx {
                 let base_y = self.y;
 
                 self.foo(fun)?;
-                self.offset += 2+self.call_extra_unit;
+                self.offset += 2;
                 self.fun_offset = None;
+                if !fun.is_func_right()
+                    || !arg.is_func_left()
+                    || self.func_extra_unit.is_none()
+                {
+                    self.offset += self.call_extra_unit;
+                }
 
                 let left_y = replace(&mut self.y, base_y);
                 let left_handle = self.offset_handle;
@@ -100,7 +106,7 @@ impl GraphCtx {
                     self.leaders.pop().unwrap();
                 }
 
-                self.offset.max_to(end+self.func_extra_unit);
+                self.offset.max_to(end+self.func_extra_unit.unwrap_or(0));
                 self.screen.line(y, x, end-x+1);
             },
         }

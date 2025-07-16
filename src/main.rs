@@ -45,7 +45,7 @@ fn main() {
     let no_color = matches.opt_present("no-color");
     let unit = matches.opt_str("unit").unwrap_or("  ".into());
     let space = matches.opt_str("unit-space");
-    let func_extra = matches.opt_get_default("func-extra", 0)
+    let func_extra = matches.opt_get("func-extra")
         .unwrap_or_else(|e| {
             let arg = matches.opt_str("func-extra").unwrap();
             eprintln!("ArgError: on arg {arg:?} {e}");
@@ -141,7 +141,7 @@ fn error(s: &str, i: usize, e: impl Display) {
 }
 
 struct StdoutFmt<'a>(io::StdoutLock<'a>);
-impl<'a> fmt::Write for StdoutFmt<'a> {
+impl fmt::Write for StdoutFmt<'_> {
     fn write_str(&mut self, s: &str) -> fmt::Result {
         io::Write::write(&mut self.0, s.as_bytes()).unwrap();
         Ok(())

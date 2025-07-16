@@ -28,6 +28,24 @@ impl Atom {
         matches!(self, Self::Func(..))
     }
 
+    #[must_use]
+    pub fn is_func_left(&self) -> bool {
+        match self {
+            Atom::Term(_) => false,
+            Atom::Func(..) => true,
+            Atom::Call(left, _) => left.is_func_left(),
+        }
+    }
+
+    #[must_use]
+    pub fn is_func_right(&self) -> bool {
+        match self {
+            Atom::Term(_) => false,
+            Atom::Func(..) => true,
+            Atom::Call(_, right) => right.is_func_right(),
+        }
+    }
+
     /// Returns `true` if the atom is [`Term`].
     ///
     /// [`Term`]: Atom::Term
