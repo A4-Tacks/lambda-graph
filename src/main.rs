@@ -6,18 +6,18 @@ use line_column::line_column;
 
 fn main() {
     let options = getopts_options! {
-        -l, --lambda        "output raw lambda";
-        -s, --simple        "output simple paren lambda";
-        -p, --pretty        "output pretty indent lambda";
+        -l, --lambda*       "output raw lambda";
+        -s, --simple*       "output simple paren lambda";
+        -p, --pretty*       "output pretty indent lambda";
         -P, --pretty-n=n    "output pretty indent lambda, custom level";
-        -n, --no-graph      "no output graph";
+        -n, --no-graph*     "no output graph";
         -u, --unit=unit     "draw unit [default: 2 spaces]";
         -U, --unit-space=s  "draw space unit [default: 2 spaces]";
         -e, --func-extra=n  "after func extra units";
         -c, --call-extra=n  "after call extra units";
-            --no-color      "no use color sequence";
-        -h, --help          "show help message";
-        -v, --version       "show version";
+            --no-color*     "no use color sequence";
+        -h, --help*         "show help message";
+        -v, --version*      "show version";
     };
     let matches = match options.parse(args().skip(1)) {
         Ok(m) => m,
@@ -28,7 +28,7 @@ fn main() {
     };
     if matches.opt_present("help") {
         let desc = env!("CARGO_PKG_DESCRIPTION");
-        let brief = options.short_usage(env!("CARGO_BIN_NAME"));
+        let brief = format!("Usage: {} [Options]", env!("CARGO_BIN_NAME"));
         let brief = format!("{brief} [expr]..\n{desc}");
         print!("{}", options.usage(&brief));
         exit(0)
