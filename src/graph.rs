@@ -33,11 +33,17 @@ impl GraphCtx {
             Atom::Term(term) => {
                 self.fun_offset = None;
                 self.offset_handle = self.offset;
-                let bar = self.bars.iter_mut()
-                    .rfind(|bar| bar.name == **term)
+                let hit = self.bars.iter()
+                    .rposition(|bar| bar.name == *term)
                     .ok_or_else(|| Error::UndefinedTerm(term.clone()))?;
+
                 let x = self.offset;
-                bar.end = x+1;
+                self.bars[hit..].iter_mut()
+                    .for_each(|bar|
+                {
+                    bar.end.max_to(x+1)
+                });
+                let bar = &self.bars[hit];
                 self.screen.bar(bar.y, x, self.y-bar.y);
             },
             Atom::Call(fun, arg) => {
@@ -84,7 +90,7 @@ impl GraphCtx {
 
                 self.foo(atom)?;
 
-                self.sync_leader();
+                //self.sync_leader();
                 self.ext_end_from_subfunc();
 
                 let bar = self.bars.pop().unwrap();
@@ -101,7 +107,8 @@ impl GraphCtx {
         Ok(())
     }
 
-    fn sync_leader(&mut self) {
+    // 由 Term 将 hit.. 更新
+    fn _sync_leader(&mut self) {
         if let Some(&leader_i) = self.leaders.last() {
             let bar_group = &mut self.bars[leader_i..];
             let max_end = bar_group.iter()
@@ -115,9 +122,7 @@ impl GraphCtx {
     }
     fn ext_end_from_subfunc(&mut self) {
         self.bars.iter_mut().rev().reduce(|child, parent| {
-            if child.end > parent.end {
-                parent.end = child.end
-            }
+            parent.end.max_to(child.end);
             parent
         });
     }
